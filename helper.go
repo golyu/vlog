@@ -18,16 +18,16 @@ var log *logrus.Logger
 // dir 日志文件保存在当前执行文件的哪个目录
 // level 日志级别,设置为debug在控制台会有显示,设置为info,warn,error和其它只会打印在文件中
 // day 文件默认保存多少天
-func Init(dir, level string, day int) error {
+func Init(dir, level string, day int) (*logrus.Logger, error) {
 	exist, err := pathExists(dir)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if !exist {
 		// 创建文件夹
 		err = os.Mkdir(dir, os.ModePerm)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
@@ -40,7 +40,7 @@ func Init(dir, level string, day int) error {
 		rotatelogs.WithRotationTime(24*time.Hour),              // 日志切割时间间隔
 	)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	switch level {
 	/*
@@ -72,7 +72,7 @@ func Init(dir, level string, day int) error {
 		logrus.PanicLevel: writer,
 	}, &logrus.TextFormatter{DisableColors: true, TimestampFormat: "2006-01-02 15:04:05.000"})
 	log.AddHook(lfHook)
-	return nil
+	return log, nil
 }
 
 func setNull() {

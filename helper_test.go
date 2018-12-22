@@ -5,7 +5,7 @@ import (
 )
 
 func TestInit(t *testing.T) {
-	err := Init("logs", "debug", 365)
+	_, err := Init("logs", "debug", 365)
 	if err != nil {
 		t.Log("xx:", err.Error())
 	}
