@@ -86,23 +86,23 @@ func setNull() {
 
 // 打印debug日志
 func Debug(format string, a ...interface{}) {
-	log.WithFields(getStack()).Debugf(format+"\n", a...)
+	log.WithFields(getStack()).Debugf(format, a...)
 }
 
 // 打印warn日志
 //noinspection GoUnusedExportedFunction
 func Warn(format string, a ...interface{}) {
-	log.WithFields(getStack()).Warnf(format+"\n", a...)
+	log.WithFields(getStack()).Warnf(format, a...)
 }
 
 // 打印error信息
 func Error(format string, a ...interface{}) {
-	log.WithFields(getStack()).Errorf(format+"\n", a...)
+	log.WithFields(getStack()).Errorf(format, a...)
 }
 
 // 打印info信息
 func Info(format string, a ...interface{}) {
-	log.WithFields(getStack()).Infof(format+"\n", a...)
+	log.WithFields(getStack()).Infof(format, a...)
 }
 
 // getStack 获取堆栈信息
