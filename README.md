@@ -9,9 +9,9 @@ go get github.com/golyu/vlog
 其它版本的go,还需要下载对应的logrus依赖包
 
 ### 使用
-```
+```go
 // 1 在main中初始化
-_,err := Init("logs", "debug",365)
+_,err := Init("logs", "debug",365,24)
 if err != nil {
 	fmt.println("xx:", err.Error())
 }
