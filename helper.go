@@ -18,7 +18,8 @@ var log *logrus.Logger
 // dir 日志文件保存在当前执行文件的哪个目录
 // level 日志级别,设置为debug在控制台会有显示,设置为info,warn,error和其它只会打印在文件中
 // day 文件默认保存多少天
-func Init(dir, level string, day int) (*logrus.Logger, error) {
+// intervalHour 多少小时切割一次日志文件
+func Init(dir, level string, day, intervalHour int) (*logrus.Logger, error) {
 	exist, err := pathExists(dir)
 	if err != nil {
 		return nil, err
@@ -35,10 +36,10 @@ func Init(dir, level string, day int) (*logrus.Logger, error) {
 	log.SetFormatter(&logrus.JSONFormatter{})
 	baseLogPath := path.Join(dir, "vlog")
 	writer, err := rotatelogs.New(
-		baseLogPath+"%Y-%m-%d %H:%M.log",
-		//rotatelogs.WithLinkName(baseLogPath),      // 生成软链，指向最新日志文件
-		rotatelogs.WithMaxAge(time.Duration(day)*24*time.Hour), // 文件最大保存时间(天)
-		rotatelogs.WithRotationTime(24*time.Hour),              // 日志切割时间间隔
+		baseLogPath+"%Y-%m-%d_%H:%M.log",
+		rotatelogs.WithLinkName(baseLogPath),                               // 生成软链，指向最新日志文件
+		rotatelogs.WithMaxAge(time.Duration(day)*24*time.Hour),             // 文件最大保存时间(天)
+		rotatelogs.WithRotationTime(time.Duration(intervalHour)*time.Hour), // 日志切割时间间隔
 	)
 	if err != nil {
 		return nil, err
