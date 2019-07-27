@@ -37,7 +37,7 @@ func Init(dir, level string, day, intervalHour int) (*logrus.Logger, error) {
 	baseLogPath := path.Join(dir, "vlog")
 	writer, err := rotatelogs.New(
 		baseLogPath+"%Y-%m-%d_%H_%M.log",
-		rotatelogs.WithLinkName(dir),                                       // 生成软链，指向最新日志文件
+		//rotatelogs.WithLinkName(dir),                                       // 生成软链，指向最新日志文件
 		rotatelogs.WithMaxAge(time.Duration(day)*24*time.Hour),             // 文件最大保存时间(天)
 		rotatelogs.WithRotationTime(time.Duration(intervalHour)*time.Hour), // 日志切割时间间隔
 	)
